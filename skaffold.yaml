@@ -8,7 +8,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: cygnetops/auth
+    - image: water34545/auth
       context: auth
       docker:
         dockerfile: Dockerfile
