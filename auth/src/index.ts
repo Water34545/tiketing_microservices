@@ -10,6 +10,7 @@ import { singOutRouter } from  './routes/singout';
 import { singUpRouter } from  './routes/singup';
 import { errorHandler } from './middlewares/error-handler';
 import { NotFoundError } from "./errors/not-found-error";
+import {DatabaseConnectionError} from './errors/databaseConnectionError';
 
 const port = 3000;
 const app = express();
@@ -39,10 +40,11 @@ const start = async () => {
   }
 
   try {
-    await mongoose.connect('mongodb://auth-mongo-srv:27017/auth');
-    console.log('connected to mango db');
+    await mongoose.connect('mongodb://auth-mongo-srv:27017/auth')
+    console.log("Connected to MongoDb");
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    throw new DatabaseConnectionError();
   }
 
   app.listen(port, () => {
