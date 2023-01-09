@@ -2,12 +2,11 @@ import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
+import { errorHandler, NotFoundError } from '@water-ticketing/common';
 import { currenUserRouter } from './routes/currentuser';
 import { singInRouter } from  './routes/singin';
 import { singOutRouter } from  './routes/singout';
 import { singUpRouter } from  './routes/singup';
-import { errorHandler } from './middlewares/error-handler';
-import { NotFoundError } from "./errors/not-found-error";
 
 const app = express();
 app.set('trust proxy', true);
