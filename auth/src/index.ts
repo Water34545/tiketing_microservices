@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
+import { DatabaseConnectionError } from '@water-ticketing/common';
 import { app } from './app';
-import { DatabaseConnectionError } from './errors/databaseConnectionError';
 
 const port = 3000;
 const start = async () => {
