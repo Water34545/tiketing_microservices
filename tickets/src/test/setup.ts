@@ -34,7 +34,7 @@ afterAll(async () => {
 
 global.singin = () => {
   const payload = {
-    id: 'sdfsafsdf',
+    id: new mongoose.Types.ObjectId().toHexString(),
     email: 'test@test.com'
   };
 
