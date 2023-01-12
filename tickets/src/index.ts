@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { DatabaseConnectionError } from '@water-ticketing/common';
 import { app } from './app';
+import { natsWrapper } from './nats-wrapper';
 
 const port = 3000;
 const start = async () => {
@@ -12,8 +13,33 @@ const start = async () => {
     throw new Error('MONGO_URI must be defined')
   }
 
+  if (!process.env.NATS_CLUSTER_ID) {
+    throw new Error('NATS_CLUSTER_ID must be defined')
+  }
+
+  if (!process.env.NATS_URI) {
+    throw new Error('NATS_URI must be defined')
+  }
+
+  if (!process.env.NATS_CLIENT_ID) {
+    throw new Error('NATS_CLIENT_ID must be defined')
+  }
+
   try {
+    await natsWrapper.connect(
+      process.env.NATS_CLUSTER_ID,
+      process.env.NATS_CLIENT_ID,
+      process.env.NATS_URI
+    );
+    natsWrapper.client.on('close', () => {
+      console.log('NATS connection closed!');
+      process.exit();
+    });
+    natsWrapper.client.on('SIGINT', () => natsWrapper.client.close());
+    natsWrapper.client.on('SIGTERM', () => natsWrapper.client.close());
+
     await mongoose.connect(process.env.MONGO_URI);
+    mongoose.set('strictQuery', false);
     console.log("Connected to MongoDb");
   } catch (err) {
     console.error(err);
