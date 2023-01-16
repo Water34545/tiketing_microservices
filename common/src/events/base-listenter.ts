@@ -34,9 +34,7 @@ export abstract class Listener<T extends Event> {
     );
 
     subscription.on('message', (msg: Message) => {
-      console.log(`
-        Massage received: ${this.subject} / ${this.queueGroupName}
-      `)
+      console.log(`мMassage received: ${this.subject} / ${this.queueGroupName}`);
 
       const parsedData = this.parseMessage(msg);
       this.onMassage(parsedData, msg);
