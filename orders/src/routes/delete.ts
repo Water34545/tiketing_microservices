@@ -1,6 +1,8 @@
 import express, { Request, Response} from 'express';
 import { NotAuthorisedError, NotFoundError, requireAuth } from '@water-ticketing/common';
 import { Order, OrderStatus } from '../models/order';
+import { OrderCancelledPublisher } from '../events/publishers/order-cancelled-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 const router = express.Router();
 
@@ -19,6 +21,13 @@ router.delete('/api/orders/:orderId', requireAuth, async (req: Request, res: Res
 
   order.status = OrderStatus.Cancelled;
   order.save();
+
+  void new OrderCancelledPublisher(natsWrapper.client).publish({
+    id: order.id,
+    ticket: {
+      id: order.ticket.id
+    }
+  })
 
   res.status(204).send(order);
 });
