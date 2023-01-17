@@ -33,7 +33,7 @@ it('creates and saves tickets', async () => {
   expect(ticket!.price).toEqual(data.price);
 });
 
-it('acks the message', async () => {
+it('ack the message', async () => {
   const { listener, data, msg } = await  setup();
   await listener.onMassage(data, msg);
 
