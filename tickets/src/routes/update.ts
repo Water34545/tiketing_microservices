@@ -1,6 +1,12 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { requireAuth, validateRequest, NotFoundError, NotAuthorisedError } from '@water-ticketing/common';
+import {
+  requireAuth,
+  validateRequest,
+  NotFoundError,
+  NotAuthorisedError,
+  BadRequestError
+} from '@water-ticketing/common';
 import { Ticket } from '../models/ticket';
 import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
 import { natsWrapper } from '../nats-wrapper';
@@ -27,6 +33,10 @@ router.put('/api/tickets/:id', requireAuth, [
     if (ticket.userId !== req.currentUser!.id) {
       throw new NotAuthorisedError();
     }
+console.log(ticket.orderId)
+    if (ticket.orderId) {
+      throw new BadRequestError('Can not edit a reserved ticket');
+    }
 
     ticket.set({
       title: req.body.title,
@@ -38,7 +48,8 @@ router.put('/api/tickets/:id', requireAuth, [
       id: ticket.id,
       title: ticket.title,
       price: ticket.price,
-      userId: ticket.userId
+      userId: ticket.userId,
+      version: ticket.version
     });
 
     res.send(ticket);

@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 import express, {Request, Response} from 'express';
-import {BadRequestError, NotFoundError, OrderStatus, requireAuth, validateRequest} from '@water-ticketing/common';
-import {body} from 'express-validator';
-import {Ticket} from '../models/ticket';
-import {Order} from '../models/order';
+import { BadRequestError, NotFoundError, requireAuth, validateRequest } from '@water-ticketing/common';
+import { body } from 'express-validator';
+import { Ticket } from '../models/ticket';
+import { Order, OrderStatus } from '../models/order';
 import { OrderCreatedPublisher } from '../events/publishers/order-created-publisher';
 import { natsWrapper } from '../nats-wrapper';
 
@@ -49,6 +49,7 @@ router.post('/api/orders/', requireAuth, [
     status: order.status,
     userId: order.userId,
     expiresAt: order.expiresAt.toISOString(),
+    version: order.version,
     ticket: {
       id: ticket.id,
       price: ticket.price
