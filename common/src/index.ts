@@ -15,6 +15,7 @@ export { TicketUpdatedEvent } from './events/ticket-updated-event';
 export { OrderCancelledEvent } from './events/order-cancelled-event';
 export { OrderCreatedEvent } from './events/order-created-event';
 export { ExpirationCompleteEvent } from './events/expiration-complete-event'
+export { PaymentCreatedEvent } from './events/payment-created-event'
 export { Listener } from './events/base-listenter';
 export { Publisher } from './events/base-publisher';
 export { Subjects } from './events/subjects';
