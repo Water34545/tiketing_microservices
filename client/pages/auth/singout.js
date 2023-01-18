@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import useRequest from '../../hooks/use-request';
 import { useRouter } from 'next/router';
 
-const SingOut = () => {
+const SignOut = () => {
   const router = useRouter();
   const { doRequest } = useRequest({
-    url: '/api/users/singout',
+    url: '/api/users/signout',
     method: 'post',
     body: {},
     onSuccess: () => router.push('/')
@@ -15,7 +15,7 @@ const SingOut = () => {
     void doRequest();
   }, [])
 
-  return <div>Singing you out...</div>
+  return <div>Signing you out...</div>
 }
 
-export default SingOut;
+export default SignOut;

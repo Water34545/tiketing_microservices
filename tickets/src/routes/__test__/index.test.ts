@@ -4,7 +4,7 @@ import { app } from '../../app';
 const createTicket = () => {
   return request(app)
     .post('/api/tickets')
-    .set('Cookie', global.singin())
+    .set('Cookie', global.signin())
     .send({
       title: 'test',
       price: 20

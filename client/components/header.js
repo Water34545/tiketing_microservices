@@ -2,9 +2,9 @@ import Link from 'next/link';
 
 const Header = ({ currentUser }) => {
   const links = [
-    !currentUser && {label: 'Sing In', href: '/auth/singin'},
-    !currentUser && {label: 'Sing Up', href: '/auth/singup'},
-    currentUser && {label: 'Sing Out', href: '/auth/singout'},
+    !currentUser && {label: 'Sign In', href: '/auth/signin'},
+    !currentUser && {label: 'Sign Up', href: '/auth/signup'},
+    currentUser && {label: 'Sign Out', href: '/auth/signout'},
   ]
     .filter(linkConfig => linkConfig)
     .map(({ label, href }) => {

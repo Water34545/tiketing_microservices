@@ -4,9 +4,9 @@ import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError } from '@water-ticketing/common';
 import { currenUserRouter } from './routes/currentuser';
-import { singInRouter } from  './routes/singin';
-import { singOutRouter } from  './routes/singout';
-import { singUpRouter } from  './routes/singup';
+import { signInRouter } from  './routes/signin';
+import { signOutRouter } from  './routes/signout';
+import { signUpRouter } from  './routes/signup';
 
 const app = express();
 app.set('trust proxy', true);
@@ -19,9 +19,9 @@ app.use(
   })
 );
 app.use(currenUserRouter);
-app.use(singInRouter);
-app.use(singOutRouter);
-app.use(singUpRouter);
+app.use(signInRouter);
+app.use(signOutRouter);
+app.use(signUpRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();

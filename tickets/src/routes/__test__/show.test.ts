@@ -16,7 +16,7 @@ it('returns the ticket if ticket is valid', async () => {
 
   const respinse = await request(app)
     .post('/api/tickets')
-    .set('Cookie', global.singin())
+    .set('Cookie', global.signin())
     .send({
       title,
       price

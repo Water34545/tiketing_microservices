@@ -1,21 +1,22 @@
 import express, { Request, Response } from 'express';
-import { body } from  'express-validator';
+import { body } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import { validateRequest, BadRequestError } from '@water-ticketing/common';
 import { User } from '../models/user';
+import { Password } from '../services/password';
 
 const router = express.Router();
 
 router.post(
-  '/api/users/singup',
+  '/api/users/signin',
   [
     body('email')
       .isEmail()
       .withMessage('Provide a valid E-mail!'),
     body('password')
       .trim()
-      .isLength({ min: 6, max: 20})
-      .withMessage('Password must been between 4 and 20 characters!')
+      .notEmpty()
+      .withMessage('You must supply the password!')
   ],
   validateRequest,
   async (req: Request, res: Response) => {
@@ -23,24 +24,30 @@ router.post(
 
     const existingUser = await User.findOne({ email });
 
-    if (existingUser) {
-      throw new BadRequestError('Email already in use!');
+    if (!existingUser) {
+      throw new BadRequestError('Invalid credentials!');
     }
 
-    const user = User.build({email, password});
-    await user.save();
+    const passwordMatch = await Password.compare(
+      existingUser.password,
+      password
+    );
+
+    if (!passwordMatch) {
+      throw new BadRequestError('Invalid credentials!');
+    }
 
     const userJwt = jwt.sign({
-      id: user.id,
-      email: user.email
+      id: existingUser.id,
+      email: existingUser.email
     }, process.env.JWT_KEY!);
 
     req.session = {
       jwt: userJwt
     };
 
-    res.status(201).send(user);
+    res.status(200).send(existingUser);
   }
 );
 
-export { router as singUpRouter };
+export { router as signInRouter };

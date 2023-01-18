@@ -14,7 +14,7 @@ it("marks an order as canceled", async () => {
 
   await ticket.save();
 
-  const user = global.singin();
+  const user = global.signin();
   const { body: order } = await request(app)
     .post('/api/orders/')
     .set('Cookie', user)
@@ -41,7 +41,7 @@ it("emits an order canceled event", async () => {
 
   await ticket.save();
 
-  const user = global.singin();
+  const user = global.signin();
   const { body: order } = await request(app)
     .post('/api/orders/')
     .set('Cookie', user)

@@ -1,11 +1,16 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
+import jwt from 'jsonwebtoken';
 import { app } from '../app';
 
 declare global {
-  var signin: () => Promise<string[]>;
+  var signin: (id?: string) => string[];
 }
+
+process.env.STRIPE_KEY = 'sk_test_51MRVXVE02hh7Ns4vcImsUpBakvkQNiEsbIyi4FURNfKRCIEb0Cj3Hj0kfYgWoG31H1Ir3D7pUfti4QtwYoDKjqkd00svo6bSnj';
+
+jest.mock('../nats-wrapper');
 
 let mongo: any;
 beforeAll(async () => {
@@ -17,6 +22,7 @@ beforeAll(async () => {
 });
 
 beforeEach( async () => {
+  jest.clearAllMocks();
   const collections = await mongoose.connection.db.collections();
 
   for (let collection of collections) {
@@ -31,14 +37,16 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = async () => {
-  const email = 'test@test.com';
-  const password = 'password';
+global.signin = (id?: string) => {
+  const payload = {
+    id: id || new mongoose.Types.ObjectId().toHexString(),
+    email: 'test@test.com'
+  };
 
-  const response = await request(app)
-    .post('/api/users/signup')
-    .send({ email, password })
-    .expect(201);
+  const token = jwt.sign(payload, process.env.JWT_KEY!);
+  const session = { jwt: token };
+  const sessionJson = JSON.stringify(session);
+  const base64 = Buffer.from(sessionJson).toString('base64');
 
-  return response.get('Set-Cookie');
+  return [`session=${base64}`];
 };

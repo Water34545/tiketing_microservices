@@ -9,7 +9,7 @@ it('returns 404 if the provided id is not exist', async () => {
 
   await request(app)
     .put(`/api/tickets/${id}`)
-    .set('Cookie', global.singin())
+    .set('Cookie', global.signin())
     .send({
       title: 'test',
       price: 20
@@ -32,7 +32,7 @@ it('returns 401 if the user is not authenticated', async () => {
 it('returns 401 if the user is not own the ticket', async () => {
   const response = await request(app)
     .post(`/api/tickets/`)
-    .set('Cookie', global.singin())
+    .set('Cookie', global.signin())
     .send({
       title: 'test',
       price: 20
@@ -40,7 +40,7 @@ it('returns 401 if the user is not own the ticket', async () => {
 
   await request(app)
     .put(`/api/tickets/${response.body.id}`)
-    .set('Cookie', global.singin())
+    .set('Cookie', global.signin())
     .send({
       title: 'test2',
       price: 200
@@ -49,7 +49,7 @@ it('returns 401 if the user is not own the ticket', async () => {
 });
 
 it('returns 400 if the user provided invalid title or price', async () => {
-  const cookie = global.singin();
+  const cookie = global.signin();
   const response = await request(app)
     .post(`/api/tickets/`)
     .set('Cookie', cookie)
@@ -78,7 +78,7 @@ it('returns 400 if the user provided invalid title or price', async () => {
 });
 
 it('update the ticket provided valid inputs', async () => {
-  const cookie = global.singin();
+  const cookie = global.signin();
   const response = await request(app)
     .post(`/api/tickets/`)
     .set('Cookie', cookie)
@@ -104,7 +104,7 @@ it('update the ticket provided valid inputs', async () => {
   expect(ticketResponse.body.price).toEqual(200);
 });
 it('publishes event', async () => {
-  const cookie = global.singin();
+  const cookie = global.signin();
   const response = await request(app)
     .post(`/api/tickets/`)
     .set('Cookie', cookie)
@@ -126,7 +126,7 @@ it('publishes event', async () => {
 });
 
 it('reject updates if the ticket is reserved', async () => {
-  const cookie = global.singin();
+  const cookie = global.signin();
   const response = await request(app)
     .post(`/api/tickets/`)
     .set('Cookie', cookie)

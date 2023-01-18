@@ -12,7 +12,7 @@ it("fetches an order", async () => {
 
   await ticket.save();
 
-  const user = global.singin();
+  const user = global.signin();
   const { body: order } = await request(app)
     .post('/api/orders/')
     .set('Cookie', user)
@@ -38,7 +38,7 @@ it("returns an error if another your trying to fetch another users order", async
 
   await ticket.save();
 
-  const user = global.singin();
+  const user = global.signin();
   const { body: order } = await request(app)
     .post('/api/orders/')
     .set('Cookie', user)
@@ -48,7 +48,7 @@ it("returns an error if another your trying to fetch another users order", async
 
   await request(app)
     .get(`/api/orders/${order.id}`)
-    .set('Cookie', global.singin())
+    .set('Cookie', global.signin())
     .send({ ticketId: ticket.id })
     .expect(401);
 });

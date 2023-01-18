@@ -40,6 +40,14 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: water34545/payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
     - image: water34545/orders
       context: orders
       docker:
