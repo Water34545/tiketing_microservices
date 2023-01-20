@@ -28,7 +28,7 @@ afterAll(async () => {
   if (mongo) {
     await mongo.stop();
   }
-  await mongoose.connection.close();
+  void mongoose.connection.close();
 });
 
 global.signin = async () => {
