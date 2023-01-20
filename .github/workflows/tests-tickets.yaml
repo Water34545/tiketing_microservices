@@ -1,8 +1,10 @@
 name: tests-tickets
 
 on:
-  pull_request
-  
+  pull_request:
+    path:
+      - 'tickets/**'
+
 jobs:
   build:
     runs-on: ubunta-latest

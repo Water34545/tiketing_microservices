@@ -1,8 +1,10 @@
-name: payments-auth
+name: tests-payments
 
 on:
-  pull_request
-  
+  pull_request:
+    path:
+      - 'payments/**'
+
 jobs:
   build:
     runs-on: ubunta-latest
