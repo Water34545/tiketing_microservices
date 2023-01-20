@@ -13,7 +13,7 @@ jest.mock('../nats-wrapper');
 let mongo: any;
 beforeAll(async () => {
   process.env.JWT_KEY = 'asfsfd';
-  const mongo = await MongoMemoryServer.create();
+  mongo = await MongoMemoryServer.create();
   const mongoUri = mongo.getUri();
 
   await mongoose.connect(mongoUri, {});
@@ -29,8 +29,10 @@ beforeEach( async () => {
 });
 
 afterAll(async () => {
-  void mongo.stop();
-  void mongoose.connection.close();
+  if (mongo) {
+    await mongo.stop();
+  }
+  await mongoose.connection.close();
 });
 
 global.signin = () => {
