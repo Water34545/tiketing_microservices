@@ -3,15 +3,15 @@ import { OrderCreatedListener } from './events/listeners/order-created-listener'
 
 const start = async () => {
   if (!process.env.NATS_CLUSTER_ID) {
-    throw new Error('NATS_CLUSTER_ID must be defined')
+    throw new Error('NATS_CLUSTER_ID must be defined!');
   }
 
   if (!process.env.NATS_URI) {
-    throw new Error('NATS_URI must be defined')
+    throw new Error('NATS_URI must be defined!');
   }
 
   if (!process.env.NATS_CLIENT_ID) {
-    throw new Error('NATS_CLIENT_ID must be defined')
+    throw new Error('NATS_CLIENT_ID must be defined!');
   }
 
   try {
