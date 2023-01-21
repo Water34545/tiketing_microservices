@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: tickets.gimpel.site
+    - host: www.tickets.gimpel.site
       http:
         paths:
           - path: /api/users/?(.*)
