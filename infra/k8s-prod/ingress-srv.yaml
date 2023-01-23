@@ -5,10 +5,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      if ($host = "www.tickets.gimpel.site") {
-          return 308 https://example.com$request_uri;
-      }
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
 spec:
   rules:
     - host: tickets.gimpel.site
