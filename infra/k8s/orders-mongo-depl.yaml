@@ -15,14 +15,14 @@ spec:
       containers:
         - name: orders-mongo
           image: mongo
-          args: ["--dbpath","/data/db"]
+          args: ["--dbpath","/data/orders-db"]
           volumeMounts:
-            - name: "mongo-data-dir"
-              mountPath: "/data/db"
+            - name: "orders-mongo-data-dir"
+              mountPath: "/data/orders-db"
       volumes:
-        - name: "tickets-data-dir"
+        - name: "orders-mongo-data-dir"
           persistentVolumeClaim:
-            claimName: "tickets-mongo-data"
+            claimName: "orders-mongo-data"
 ---
 apiVersion: v1
 kind: Service
