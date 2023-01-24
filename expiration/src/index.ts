@@ -14,7 +14,7 @@ const start = async () => {
     throw new Error('NATS_CLIENT_ID must be defined!');
   }
 
-  try {
+  // try {
     await natsWrapper.connect(
       process.env.NATS_CLUSTER_ID,
       process.env.NATS_CLIENT_ID,
@@ -29,9 +29,9 @@ const start = async () => {
 
     new OrderCreatedListener(natsWrapper.client).listen();
 
-  } catch (err) {
-    console.error(err);
-  }
+  // } catch (err) {
+  //  console.error(err);
+  // }
 }
 
 void start();
