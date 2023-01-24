@@ -15,14 +15,14 @@ spec:
       containers:
         - name: payments-mongo
           image: mongo
-          args: ["--dbpath","/data/db"]
+          args: ["--dbpath","/data/payments-db"]
           volumeMounts:
-            - name: "mongo-data-dir"
-              mountPath: "/data/db"
+            - name: "payments-mongo-data-dir"
+              mountPath: "/data/payments-db"
       volumes:
-        - name: "mongo-data-dir"
+        - name: "payments-mongo-data-dir"
           persistentVolumeClaim:
-            claimName: "tickets-mongo-data"
+            claimName: "payments-mongo-data"
 ---
 apiVersion: v1
 kind: Service
