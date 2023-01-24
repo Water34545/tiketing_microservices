@@ -16,12 +16,12 @@ spec:
       containers:
         - name: tickets-mongo
           image: mongo
-          args: ["--dbpath","/data/tickets-db"]
+          args: ["--dbpath","/data/db"]
           volumeMounts:
-            - name: "tickets-mongo-data-dir"
-              mountPath: "/data/tickets-db"
+            - name: "mongo-data-dir"
+              mountPath: "/data/db"
       volumes:
-        - name: "tickets-mongo-data-dir"
+        - name: "mongo-data-dir"
           persistentVolumeClaim:
             claimName: "tickets-mongo-data"
 ---
