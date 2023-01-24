@@ -15,12 +15,12 @@ spec:
       containers:
         - name: auth-mongo
           image: mongo
-          args: ["--dbpath","/data/auth-db"]
+          args: ["--dbpath","/data/db"]
           volumeMounts:
-            - name: "auth-mongo-data-dir"
-              mountPath: "/data/auth-db"
+            - name: "mongo-data-dir"
+              mountPath: "/data/db"
       volumes:
-        - name: "auth-mongo-data-dir"
+        - name: "mongo-data-dir"
           persistentVolumeClaim:
             claimName: "auth-mongo-data"
 ---
