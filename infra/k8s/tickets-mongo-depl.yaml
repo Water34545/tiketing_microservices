@@ -20,10 +20,10 @@ spec:
           volumeMounts:
             - name: "mongo-data-dir"
               mountPath: "/data/tickets-db"
-          volumes:
-            - name: "mongo-data-dir"
-              persistentVolumeClaim:
-                claimName: "tickets-mongo-data"
+      volumes:
+        - name: "mongo-data-dir"
+          persistentVolumeClaim:
+            claimName: "tickets-mongo-data"
 ---
 apiVersion: v1
 kind: Service
