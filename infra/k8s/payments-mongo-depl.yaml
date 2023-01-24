@@ -15,6 +15,14 @@ spec:
       containers:
         - name: payments-mongo
           image: mongo
+          args: ["--dbpath","/data/db"]
+          volumeMounts:
+            - name: "mongo-data-dir"
+              mountPath: "/data/db"
+      volumes:
+        - name: "mongo-data-dir"
+          persistentVolumeClaim:
+            claimName: "tickets-mongo-data"
 ---
 apiVersion: v1
 kind: Service
@@ -28,3 +36,14 @@ spec:
       protocol: TCP
       port: 27017
       targetPort: 27017
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: payments-mongo-data
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
