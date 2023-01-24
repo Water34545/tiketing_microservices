@@ -7,6 +7,7 @@ spec:
   selector:
     matchLabels:
       app: tickets-mongo
+  strategy: {}
   template:
     metadata:
       labels:
@@ -16,30 +17,6 @@ spec:
         - name: tickets-mongo
           image: mongo
           args: ["--dbpath","/data/tickets-db"]
-          livenessProbe:
-            exec:
-              command:
-                - mongo
-                - --disableImplicitSessions
-                - --eval
-                - "db.adminCommand('ping')"
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-            successThreshold: 1
-            failureThreshold: 6
-          readinessProbe:
-            exec:
-              command:
-                - mongo
-                - --disableImplicitSessions
-                - --eval
-                - "db.adminCommand('ping')"
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 5
-            successThreshold: 1
-            failureThreshold: 6
           volumeMounts:
             - name: "mongo-data-dir"
               mountPath: "/data/tickets-db"
