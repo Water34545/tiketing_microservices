@@ -54,7 +54,7 @@ metadata:
   annotations:
     service.beta.kubernetes.io/do-loadbalancer-protocol: 'http'
     service.beta.kubernetes.io/do-loadbalancer-tls-ports: '443'
-    service.beta.kubernetes.io/do-loadbalancer-certificate-id: '5757ca49613ccb5d9075f9ad9e30e4e6d0f31087'
+    service.beta.kubernetes.io/do-loadbalancer-certificate-id: '08176722-6012-4381-832b-110836efa49e'
     service.beta.kubernetes.io/do-loadbalancer-disable-lets-encrypt-dns-records: 'false'
     service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: 'true'
     service.beta.kubernetes.io/do-loadbalancer-enable-proxy-protocol: 'true'
